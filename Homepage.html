@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html>
+<title>Product Master</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.js"></script>
+
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+  body,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: "Lato", sans-serif;
+  }
+
+  body,
+  html {
+    height: 100%;
+    color: #777;
+    line-height: 1.8;
+  }
+
+  /* Create a Parallax Effect */
+
+  .bgimg-1,
+  .bgimg-2,
+  .bgimg-3,
+  .bgimg-4 {
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  /* First image (Logo. Full height) */
+
+  .bgimg-1 {
+    background-image: url('Onlinecart.jpg');
+    min-height: 50%;
+      width: 100%;
+     
+      
+  }
+
+  /* Second image (Portfolio) */
+
+  .bgimg-2 {
+    background-image: url("CLOTHING.jpeg");
+    min-height: 400px;
+  }
+
+  /* Third image (Contact) */
+
+  .bgimg-3 {
+    background-image: url("SKI.jpg");
+    min-height: 400px;
+  }
+
+  /*Fourth image(PORT)*/
+
+  .bgimg-4 {
+    background-image: url("Access.jpeg");
+    min-height: 400px;
+  }
+
+  .w3-wide {
+    letter-spacing: 10px;
+      padding-bottom: 0%;
+  }
+
+  .w3-hover-opacity {
+    cursor: pointer;
+  }
+
+  /* Turn off parallax scrolling for tablets and phones */
+
+  @media only screen and (max-device-width: 1024px) {
+    .bgimg-1,
+    .bgimg-2,
+    .bgimg-3 {
+      background-attachment: inherit;
+    }
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: Verdana, sans-serif;
+  }
+
+  .mySlides {
+    display: none;
+  }
+
+  img {
+    vertical-align: middle;
+  }
+
+  /* Slideshow container */
+
+  .slideshow-container {
+    max-width: 10000px;
+    position: relative;
+    margin: auto;
+  }
+
+  /* Caption text */
+
+  .text {
+    color: #f2f2f2;
+    font-size: 15px;
+    padding: 8px 12px;
+    position: absolute;
+    bottom: 8px;
+    width: 100%;
+    text-align: center;
+  }
+
+  /* Number text (1/3 etc) */
+
+  .numbertext {
+    color: #f2f2f2;
+    font-size: 12px;
+    padding: 8px 12px;
+    position: absolute;
+    top: 0;
+  }
+
+  /* The dots/bullets/indicators */
+
+  .dot {
+    height: 15px;
+    width: 15px;
+    margin: 0 2px;
+    background-color: grey;
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.6s ease;
+  }
+
+  .active {
+    background-color: #ffffff;
+  }
+
+  /* Fading animation */
+
+  .fade {
+    -webkit-animation-name: fade;
+    -webkit-animation-duration: 1.5s;
+    animation-name: fade;
+    animation-duration: 1.5s;
+  }
+
+  @-webkit-keyframes fade {
+    from {
+      opacity: .4
+    }
+    to {
+      opacity: 1
+    }
+  }
+
+  @keyframes fade {
+    from {
+      opacity: .4
+    }
+    to {
+      opacity: 1
+    }
+  }
+
+  /* On smaller screens, decrease text size */
+
+  @media only screen and (max-width: 300px) {
+    .text {
+      font-size: 11px
+    }
+  }
+
+  .navbar {
+
+    background-color: #333;
+    font-family: Arial;
+  }
+
+  .navbar a {
+    float: left;
+    font-size: 16px;
+
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+
+  .dropdown {
+    float: left;
+
+  }
+
+  .dropdown .dropbtn {
+    font-size: 16px;
+    border: none;
+    outline: none;
+    color: white;
+    padding: 14px 16px;
+    background-color: green;
+  }
+
+  .navbar a:hover,
+  .dropdown:hover .dropbtn {
+    background-color: white;
+  }
+
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    color: black;
+    background-color: white;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, #f9f9f9, 0, 0.2);
+    z-index: 1;
+  }
+
+  .dropdown-content a {
+    float: none;
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+  }
+
+  .dropdown-content a:hover {
+    background-color: #ddd;
+  }
+
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+
+  .nav-tabs {
+    margin-bottom: 15px;
+  }
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>.sign-with {
+    margin-top: 25px;
+    padding: 20px;
+  }
+
+  div#OR {
+    app height: 30px;
+    width: 30px;
+    border: 1px solid #C2C2C2;
+    border-radius: 50%;
+    font-weight: bold;
+    line-height: 28px;
+    text-align: center;
+    font-size: 12px;
+    float: right;
+    position: absolute;
+    right: -16px;
+    top: 40%;
+    z-index: 1;
+    background: #DFDFDF;
+  }
+  .list-group-item{
+    padding-left: 40%;
+      visibility: hidden;
+
+  }
+    .room{
+        text-align: center;
+    }
+</style>
+
+<body ng-app="myApp" ng-controller="myctrl">
+      <div ng-show="showstart">  
+          <center>
+              <input type="text" style="border:1px solid black" ng-model="test" placeholder="Search Products here">
+              <button ng-click="Search_items($index)">Search</button>
+          </center>
+  <div class="bgimg-1 w3-display-container w3-s">
+    <div  style="white-space:nowrap;padding-top:20%;">
+      <span  class="w3-hide-small" class="w3-center w3-padding-large w3-black w3-xlarge w3-wide w3-animate-opacity">
+          <img src="LOGO.png" width="300" height="100" style="margin-left: 40%;margin-bottom: 100%">
+        </span>
+    </div>
+  </div>
+
+  <!-- Container (About Section) -->
+  <div class="slideshow-container">
+
+    <div class="mySlides fade">
+      <div class="numbertext"></div>
+      <img src="clear.png" style="width:1300px;height:300px;">
+      <div class="text"></div>
+    </div>
+
+    <div class="mySlides fade">
+      <div class="numbertext"></div>
+      <img src="jansale.jpeg" style="width:1300px;height:300px;">
+      <div class="text"></div>
+    </div>
+
+    <div class="mySlides fade">
+      <div class="numbertext"></div>
+      <img src="winter.jpg" style="width:1300px;height:300px;">
+      <div class="text"></div>
+    </div>
+
+  </div>
+  <br>
+
+  <div style="text-align:center">
+    <span class="dot"></span>
+    <span class="dot"></span>
+    <span class="dot"></span>
+  </div>
+
+  <!-- Second Parallax Image with Portfolio Text -->
+  <div class="bgimg-3 w3-display-container w3-opacity-min">
+    <div class="w3-display-middle">
+      <span class="w3-xxlarge w3-text-white w3-wide"></span>
+    </div>
+  </div>
+       </div>
+ <div ng-hide="showstart">
+     <div class="col-xs-6" style="margin-left: 10%;padding-top: 5%">
+         <img src="Laptop.jpg" width="400px" height="300px">
+     </div>
+              <div class="col-xs-6"  style="width: 30%;left:5%;right:5%; padding-top: 5%;" ng-repeat="x in finalList | filter:newtest">
+                  
+            <table class="table table-striped table-bordered" style="border: 1px solid black;">
+                <thead><b>Technical Specification</b></thead>
+                 <tbody  ng-repeat="y in x.techspec ">
+                <tr>
+                    <td>{{y.id}}</td>
+                    <td>{{y.val}}</td></tr>
+                </tbody>       
+            </table>
+                  <span>  <button class="btn btn-primary">ADD TO CART</button></span>
+                  <span> <button class="btn btn-success">BUY NOW</button></span>
+        </div>
+           <div class="col-xs-4" style="margin-left: 10%; padding-top: 0% ">
+                <button ng-click="Viewreview()">View Review</button>
+               <button ng-click="Reviewstart=true;">Add Reviews</button>
+              
+               <div ng-show="Reviewstart"> 
+               <table>
+                   <thead></thead>
+                   <tbody>
+                       <tr>
+                           <td>Name</td>
+                           <td><input type="text" ng-model="Reviewname" required></td>
+                       </tr>
+                       <tr></tr>
+                       <tr>
+                           <td>Email_id</td>
+                           <td><input type="email" ng-model="Reviewemail" required></td>
+                       </tr>   <tr></tr>
+                       <tr>
+                           <td>Comment</td>
+                           <td><textarea rows="4" cols="20" ng-model="Reviewarea" required></textarea ></td>
+                       </tr>   <tr></tr>
+                          <tr>
+                              <td><button ng-click="Reviewfun()" class="btn btn-primary">Send</button></td>
+                       </tr>
+                   </tbody>
+                   </table>
+               </div>
+                <div ng-show="Viewstart"> 
+               <table>
+                   <thead></thead>
+                   <tbody>
+                       <tr>
+                           <td>Name</td>
+                           <td>{{review}}</td>
+                       </tr>
+                       <tr></tr>
+                       <tr>
+                           <td>Email_id</td>
+                           <td>{{review1}}</td>
+                       </tr>   <tr></tr>
+                       <tr>
+                           <td>Comment</td>
+                           <td>{{review2}}</td>
+                       </tr>   
+                          <tr>
+                              <td><button ng-click="location.reload();">Back</button></td>
+                       </tr>
+                   </tbody>
+                   </table>
+               </div>
+     </div>
+      </div>
+   
+  <!-- Container (Contact Section) -->
+
+  <!-- Footer -->
+  
+  <footer class="col-xs-4" class="room">
+        <hr>
+      <i class="fa fa-arrow-up w3-margin-right" ng-click="topFunction()">To the top</i>
+    <div class="w3-xlarge w3-section">
+      <i class="fa fa-facebook-official w3-hover-opacity"></i>
+      <i class="fa fa-instagram w3-hover-opacity"></i>
+      <i class="fa fa-snapchat w3-hover-opacity"></i>
+      <i class="fa fa-pinterest-p w3-hover-opacity"></i>
+      <i class="fa fa-twitter w3-hover-opacity"></i>
+      <i class="fa fa-linkedin w3-hover-opacity"></i>
+    </div>
+    <p>Powered by Team1</p>
+      <hr>
+  </footer>
+
+  <script>
+    var app = angular.module("myApp", []);
+    app.controller("myctrl", function ($scope,$http) {
+      $http.get("http://192.168.10.30:5000/initializeList").then(function (response) {
+                        $scope.finalList = response.data;
+                    });
+    var slideIndex = 0;
+  
+ $scope.showstart=true;
+   $scope.showSlides= function () {
+      var i;
+      var slides = document.getElementsByClassName("mySlides");
+      var dots = document.getElementsByClassName("dot");
+
+      for (i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+      }
+      slideIndex++;
+      if (slideIndex > slides.length) { slideIndex = 1 }
+      for (i = 0; i < dots.length; i++) {
+        dots[i].className = dots[i].className.replace(" active", "");
+      }
+      slides[slideIndex - 1].style.display = "block";
+      dots[slideIndex - 1].className += " active";
+
+      setTimeout(showSlides, 1000); // Change image every 1 second
+    }
+    $scope.go = function (x) 
+    {
+                $scope.itemIndex = x;
+                $scope.id1 = $scope.finalList[x].pid;
+                    for (var i = 0; i < $scope.finalList.length; i++)
+                    {
+                        if ($scope.finalList[i].pid == $scope.id1) {
+                            $scope.new1 = $scope.id1;
+                        }
+                    }
+        $scope.showstart=false;
+     }
+    $scope.Search_items=function(x)
+    {   
+               $scope.itemIndex = x;
+                    for(var i = 0; i <$scope.finalList.length; i++)
+                    {
+                        if ($scope.finalList[i].pid == $scope.test) 
+                        {
+                            $scope.newtest=$scope.test;
+                             $scope.showstart=false;
+                        }    
+                    }     
+       
+    }
+    $scope.topFunction=function() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+}
+    $scope.Reviewfun=function()
+    {
+        $scope.Reviewstart=true;
+        $scope.add={"pid":$scope.test,"review":{"Reviewname":$scope.Reviewname,"Reviewemail":$scope.Reviewemail,"Reviewarea":$scope.Reviewarea}};
+         $http.post("http://192.168.10.30:5000/insertList123", $scope.add).then(function (response) {
+                        console.log("success");
+                    });
+        $scope.Reviewstart=false;
+    }
+    $scope.Viewreview=function()
+    {
+        $scope.Viewstart=true;
+        $http.get("http://192.168.10.30:5000/initializeList").then(function (response) {
+                        $scope.finalList = response.data;
+                    });
+        $scope.review=$scope.finalList[0].review[0].Reviewname;
+        $scope.review1=$scope.finalList[0].review[0].Reviewemail;
+        $scope.review2=$scope.finalList[0].review[0].Reviewarea;
+
+    }
+  });
+ 
+  </script>
+
+</body>
+
+</html>
