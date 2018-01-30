@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Students</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+        <style>
+            .itemContainer{
+                float:left;
+                margin-left:20px;
+                background-color: bisque;
+            
+            
+            }
+            .itemContainer:hover{
+                background-color: burlywood;
+                
+            }
+            .itemContainer p{
+                font-weight: bold;
+            }
+            .form_container{
+                background-color:beige;
+            }
+        </style>
+        <script>
+            var alreadyExistingItems = [];
+            function init(){
+                if(localStorage.alreadyExistingItems){
+                    return;
+                }
+                localStorage.alreadyExistingItems = JSON.stringify(alreadyExistingItems);
+            }init();
+        
+        </script>
+    </head>
+    <body>
+        <div class="container" ng-app="myApp" ng-controller="myCont">
+            <div class="row">
+                <div class="form_container col-lg-offset-4 col-lg-4">
+                    <form ng-submit="register()" name="studentForm">
+                        <div class="form-group">
+                            <label for="id_firstName">First Name</label> 
+                            <input type="text" class="form-control" id="id_firstName" pattern="[A-Za-z]+" ng-model="firstName" autofocus required>
+                        </div>
+                        <div class="form-group">
+                            <label for="id_lastName">Last Name</label>
+                            <input type="text" class="form-control" id="id_lastName" ng-model="lastName" pattern="[A-Za-z]+" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="id_DOB">Date of Birth</label>
+                            <input type="date" class="form-control" id="id_DOB" ng-model="date" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="id_email">Email</label>
+                            <input type="email" class="form-control" id="id_email" ng-model="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="id_address">Address</label>
+                            <input type="text" class="form-control" id="id_address" ng-model="address" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="id_phno">Phno</label>
+                            <input type="text" class="form-control" id="id_phno" pattern="[789][0-9]{9}" ng-model="phno" required>
+                        </div>
+                        <div style="text-align: center;">
+                            <input type="submit" value="Submit" class="btn btn-md btn-success">
+                        </div>
+                    </form>
+                    <!--div style="text-align: center;">
+                        <button class="btn btn-md btn-success">Register</button>
+                    </div-->
+                </div>
+            </div><br><br>
+            <div class="well itemContainer" ng-repeat="item in enrolledStudent">
+                    <div style="float:right;text-align: right;">
+                        <button ng-click="remove($index);"><span class="glyphicon glyphicon-remove"></span></button>
+                    </div>
+                    <p>First Name</p>{{item.fName}}
+                    <p>Last Name</p>{{item.lName}}
+                    <p>DOB</p>{{item.date}}
+                    <p>Email</p>{{item.email}}
+                    <p>Address</p>{{item.address}}
+                    <p>Phno</p>{{item.phno}}
+                    <div style="text-align: center;">
+                        <button ng-click="view(item,$index)">Edit</button>
+                    </div>
+            </div>
+            
+        </div>
+        <script>
+            var app = angular.module("myApp",[]);
+            app.controller("myCont",function($scope){
+            $scope.enrolledStudent = JSON.parse(localStorage.alreadyExistingItems);
+            var flag =0;
+            var indexToEdit = null;
+            $scope.register= function(){
+                if(flag==0){
+                    var ob ={fName:$scope.firstName,lName:$scope.lastName,date:$scope.date,email:$scope.email,address:$scope.address,phno:$scope.phno};
+                    var temp = JSON.parse(localStorage.alreadyExistingItems);
+                    //alert(temp);
+                    temp.push(ob);
+                    $scope.enrolledStudent = temp;
+                    localStorage.alreadyExistingItems=JSON.stringify(temp);
+                    $scope.firstName=null;
+                    $scope.lastName=null;
+                    $scope.date=null;
+                    $scope.email=null;
+                    $scope.address=null;
+                    $scope.phno=null;
+                    }
+                else if(flag==1){
+                    //alert(indexToEdit);
+                    $scope.enrolledStudent[indexToEdit].fName=$scope.firstName;
+                    $scope.enrolledStudent[indexToEdit].lastName=$scope.lastName;
+                    $scope.enrolledStudent[indexToEdit].date=$scope.date;
+                    $scope.enrolledStudent[indexToEdit].email=$scope.email;
+                    $scope.enrolledStudent[indexToEdit].address=$scope.address;
+                    $scope.enrolledStudent[indexToEdit].phno=$scope.phno;
+                    $scope.firstName=null;
+                    $scope.lastName=null;
+                    $scope.date=null;
+                    $scope.email=null;
+                    $scope.address=null;
+                    $scope.phno=null;
+                  
+                    flag=0;
+                }
+                };
+            $scope.remove = function(index){
+                $scope.enrolledStudent.splice(index,1);
+                var temp = JSON.parse(localStorage.alreadyExistingItems);
+                temp.splice(index,1);
+                localStorage.alreadyExistingItems=JSON.stringify(temp);
+            }  
+            $scope.view = function(item,index){
+                    flag=1;
+                    indexToEdit = index
+                    $scope.firstName=item.fName;
+                    $scope.lastName=item.lName;
+                    $scope.date=item.date;
+                    $scope.email=item.email;
+                    $scope.address=item.address;
+                    $scope.phno=item.phno;
+            }
+            });
+        </script>
+    </body>
+</html>    

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+        <style>
+            FONT{
+                text-decoration: underline;
+                color: aqua;
+            }
+        </style>
+    </head>
+    <!--<nav class="navbar navbar-inverse">
+  <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">WebSiteName</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="#">Home</a></li>
+      <li><a href="#">Page 1</a></li>
+      <li><a href="#">Page 2</a></li>
+      <li><a href="#">Page 3</a></li>
+    </ul>
+  </div>
+</nav>-->
+  
+
+
+    <body ng-app="myApplication" ng-controller="myController">
+        <table>
+            <thead>
+            <nav class="navbar navbar-default">
+            <div class="container">
+                <a class="navbar-brand" href="#">Product Details</a>
+                <ul class="nav navbar-nav navbar-right">
+                <button class="btn btn-danger navbar-btn">Create</button>
+                </ul></div>
+           </nav>
+    <ul class="nav nav-pills">
+    <li class="active"><a href="#">Recent</a></li>
+    <li><a href="#">Pending Payment</a></li>
+    <li><a href="#">Overdue</a></li>
+    <li><a href="#">Paid</a></li>
+	<li><a href="#" class="nav navbar-nav navbar-right" >create</a></li>
+  </ul></thead>
+        <table class="table table-bordered">
+            <tr>
+                <th> Name </th>
+                <th>Technical Specifications </th>
+                <!--th>  Total </th-->
+                <!--<th>  Status </th>--> 
+<th>sort by Name<input ng-model="f.pid"></th>
+<!--<th>sort by Invoice Date<input ng-model="f.date"></th>
+<th>sort by invoice<input ng-model="f.invoice"></th>-->
+                <!--th>  Action  <a href="#"><span class="glyphicon glyphicon-glass"></span></a></th>
+            </tr-->
+            <tr ng-repeat="item in finalList| filter:f">
+                <td>{{item.pid}}</td>
+                <td ng-repeat="tech in item.techspec">{{tech.id}}:{{tech.val}}</td><br>
+                <!--<td>{{item.customerName}}</td>
+                <td>{{item.amount}}</td>
+                <td>{{item.tax}}</td>
+                <!--td>{{item.total}}</td-->
+                <!--<td>{{item.status}}</td>-->
+
+            </tr>
+        </table>
+            
+        </table>
+    <script>
+        var myApp = angular.module("myApplication",[]);
+        myApp.controller("myController",function($scope,$http){
+           $http.get("http://localhost:8000").then(function(response){
+               $scope.finalList = response.data;
+           });
+        });
+        
+    </script>
+ 
+
+
+    </body>
+</html>

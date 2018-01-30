@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+        <title>Product Description</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+        <style>
+             
+                * {
+
+                        box-sizing: border-box;
+                }
+
+                .img-magnifier-container {
+                        position: absolute;
+                        cursor: :none
+                     
+                }
+
+                .img-magnifier-glass {
+                        position: absolute;
+                        border: 1px solid #000;
+                        border-radius: 50%;
+                        cursor: none;
+                        /*Set the size of the magnifier glass:*/
+                        width: 150px;
+                        height: 150px;
+                        
+                }
+        </style>
+        <script>
+                function magnify(imgID, zoom) {
+                        var img, glass, w, h, bw;
+                        img = document.getElementById(imgID);
+                        /*create magnifier glass:*/
+                        glass = document.createElement("DIV");
+                        glass.setAttribute("class", "img-magnifier-glass");
+                        /*insert magnifier glass:*/
+                        img.parentElement.insertBefore(glass, img);
+                        /*set background properties for the magnifier glass:*/
+                        glass.style.backgroundImage = "url('" + img.src + "')";
+                        glass.style.backgroundRepeat = "no-repeat";
+                        glass.style.backgroundSize = (img.width * zoom) + "px " + (img.height * zoom) + "px";
+                        bw = 3;
+                        w = glass.offsetWidth / 2;
+                        h = glass.offsetHeight / 2;
+                        /*execute a function when someone moves the magnifier glass over the image:*/
+                        glass.addEventListener("mousemove", moveMagnifier);
+                        img.addEventListener("mousemove", moveMagnifier);
+                        /*and also for touch screens:*/
+                        glass.addEventListener("touchmove", moveMagnifier);
+                        img.addEventListener("touchmove", moveMagnifier);
+                        function moveMagnifier(e) {
+                                var pos, x, y;
+                                /*prevent any other actions that may occur when moving over the image*/
+                                e.preventDefault();
+                                /*get the cursor's x and y positions:*/
+                                pos = getCursorPos(e);
+                                x = pos.x;
+                                y = pos.y;
+                                /*prevent the magnifier glass from being positioned outside the image:*/
+                                if (x > img.width - (w / zoom)) { x = img.width - (w / zoom); }
+                                if (x < w / zoom) { x = w / zoom; }
+                                if (y > img.height - (h / zoom)) { y = img.height - (h / zoom); }
+                                if (y < h / zoom) { y = h / zoom; }
+                                /*set the position of the magnifier glass:*/
+                                glass.style.left = (x - w) + "px";
+                                glass.style.top = (y - h) + "px";
+                                /*display what the magnifier glass "sees":*/
+                                glass.style.backgroundPosition = "-" + ((x * zoom) - w + bw) + "px -" + ((y * zoom) - h + bw) + "px";
+                        }
+                        function getCursorPos(e) {
+                                var a, x = 0, y = 0;
+                             
+                                /*get the x and y positions of the image:*/
+                                a = img.getBoundingClientRect();
+                                /*calculate the cursor's x and y coordinates, relative to the image:*/
+                                x = e.pageX - a.left;
+                                y = e.pageY - a.top;
+                                /*consider any page scrolling:*/
+                                x = x - window.pageXOffset;
+                                y = y - window.pageYOffset;
+                                return { x: x, y: y };
+                        }
+                }
+
+        </script>
+</head>
+
+<body style="padding-top: 80px;">
+        <div class="container">
+                <div id="myCarousel" class="carousel slide">
+                        <!-- Wrapper for slides -->
+                        <div class="col-sm-4">
+                                <div class="carousel-inner">
+                                        <div class="item active img-magnifier-container">
+                                                <img id="myimage" src="1.jpg" alt=" " width="384" height="240" style="width:100%;">
+                                        </div>
+                                        <div class="item img-magnifier-container">
+                                                <img id="myimage1" src="2.jpg" alt=" " width="384" height="240" style="width:100%;">
+                                        </div>
+                                        <div class="item img-magnifier-container">
+                                                <img id="myimage2" src="3.jpg" alt=" " width="384" height="240" style="width:100%;">
+                                        </div>
+                                        <div class="item img-magnifier-container">
+                                                <img id="myimage3" src="4.jpg" alt=" " width="384" height="240" style="width:100%;">
+                                        </div>
+                                        <div class="item img-magnifier-container">
+                                                <img id="myimage4" src="5.jpg" alt=" " width="384" height="240" style="width:100%;">
+                                        </div>
+                                        <div class="item img-magnifier-container">
+                                                <img id="myimage5" src="6.jpg" alt=" " width="384" height="240" style="width:100%;">
+                                        </div>
+                                        <!-- Left and right controls -->
+                                        <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+                                                <span class="glyphicon glyphicon-chevron-left"></span>
+                                                <span class="sr-only">Previous</span>
+                                        </a>
+                                        <a class="right carousel-control" href="#myCarousel" data-slide="next">
+                                                <span class="glyphicon glyphicon-chevron-right"></span>
+                                                <span class="sr-only">Next</span>
+                                        </a>
+                                        
+                                </div>
+
+                                <button>
+                                        <i class="fa fa-heart-o"></i> WISHLIST</button>
+                                <button style="background-color: #CA651E;">
+                                        <i class="fa fa-cart-plus"></i> BUY</button>
+                        </div>
+
+                </div>
+                <div class="col-sm-4">
+                        <h1> TENT- 2-MAN,GREEN</h1>
+                        <p>Made for 2 people camping.
+                                <br> Easy-to-pitch, 2-man tent that has passed all our waterproofing and durability tests. Fly
+                                sheet to protect you from condensation. Free standing dome structure.</p>
+                        <p style="font-size: 28px;color: black;"> &#8377;1299</p>
+                        <h4>Quantity :</h4>
+                        <input type="number" value="1" name="quantity" min="1">
+
+
+                </div>
+        </div>
+
+
+        <script>
+                /* Initiate Magnify Function
+                with the id of the image, and the strength of the magnifier glass:*/
+                magnify("myimage", 2);
+                magnify("myimage1", 2);
+                magnify("myimage2", 2);
+                magnify("myimage3", 2);
+                magnify("myimage4", 2);
+                magnify("myimage5", 2);
+        
+        </script>
+
+
+
+
+
+
+</body>
+
+</html>

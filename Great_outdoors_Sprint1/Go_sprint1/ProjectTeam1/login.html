@@ -1,0 +1,78 @@
+<html>
+    <head>
+            <title>Chat::</title>
+                <meta charset="utf-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1">
+                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+                <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+            <head>
+                <style>
+        firsttime{
+            
+            padding-right: 1000px;
+            display:auto;
+        }
+                </style>
+            </head>
+           <body ng-app="app" ng-controller="cntrl" ng-init="tureapp=true">
+               <div ng-show="tureapp" class="container">
+               <h1>Login page</h1>
+               User name: <input type="text" ng-model="username" placeholder="username" autofocus ><br><br>
+               password:  <input type="password" ng-model="userpassword" placeholder="password" autofocus><br><br>
+               <button type="login" ng-click="login()" >Login</button><br>
+               <a href="#" class="col-lg-10" ng-click="tureapp=ture">new member?</a>
+               <br>
+               <a href="#forgot" class="col-md-6" ng-click="forgot()">Forgot password?</a>
+               </div>
+               <div ng-hide="tureapp" class="container">
+               <h1>Register page</h1>
+               User name: <input type="text" ng-model="usernames" placeholder="username" autofocus required><br><br>
+               password:  <input type="password" ng-model="userpasswords" placeholder="password" required><br><br>
+               Phone Number: <input type="number" ng-model="phonenumber" placeholder="phone number" required><br><br>
+               <button type="register" ng-click="register()" >Register</button>
+               <button type="button" ng-click="tureapp=true">Go to login page</button>
+            </div>
+            <!--ul>
+                <li ng-repeat="x in mongoapp">{{x.usernames}}{{x.userpasswords}}</li>
+            </ul-->
+            <script>
+            var mongoapp=[];
+            var application=angular.module("app",[]);
+            application.controller("cntrl",function($scope,$http)
+            {
+                $scope.login=function()
+                {
+                  if($scope.username == null || $scope.userpassword == null){
+                      alert("Are you mad");
+                  }
+                  var temp = {userName:$scope.username , pass :$scope.userpassword };
+                  $http.post("http://localhost:3000/login",temp).then(function(response){
+                    if(response.data==true){
+                        alert("successfull login");
+                    }
+                    if(response.data==false){
+                        alert("invalid user");
+                    }
+                  });
+
+                }
+                $scope.register=function()
+                {
+                    alert("reaching here");
+                    var dataOfUser = {userName:$scope.usernames,password:$scope.userpasswords,phNo:$scope.phonenumber};
+                    $http.post("http://localhost:3000/signUp",dataOfUser).then(function(response){
+                        console.log("success");
+                        window.location("changename.html");
+                    });
+                    //mongoapp.push($scope.usernames, $scope.userpasswords);
+                    //$scope.username=null;
+                    //$scope.userpassword=null;  
+                }
+
+            
+            
+            });
+            </script>
+            </body>

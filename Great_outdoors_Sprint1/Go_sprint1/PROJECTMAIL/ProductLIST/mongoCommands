@@ -1,0 +1,13 @@
+1.use CART
+2.db.createCollection("BILL_INVOICE")
+3.db.BILL_INVOICE.insert([
+		{date:"01/01/18" ,invoice:"IN1", customerName:"Akshay" ,amount:21 ,tax:4 ,status:"DONE"},
+		{date:"03/02/18" ,invoice:"IN2", customerName:"Nitish" ,amount:42 ,tax:12 ,status:"NOT DONE"},
+		{date:"04/02/18" ,invoice:"IN3", customerName:"Pranav" ,amount:54 ,tax:20 ,status:"DONE"},
+		{date:"06/02/18" ,invoice:"IN4", customerName:"Vinutha" ,amount:33 ,tax:2 ,status:"DONE"},
+		{date:"01/03/18" ,invoice:"IN5", customerName:"Priyanka" ,amount:55 ,tax:22 ,status:"PENDING"},
+		{date:"05/03/18" ,invoice:"IN6", customerName:"Vaishnavi" ,amount:24 ,tax:4 ,status:"PENDING"},
+		{date:"19/03/18" ,invoice:"IN7", customerName:"Pranchal" ,amount:44 ,tax:10 ,status:"PENDING"},
+		{date:"06/04/18" ,invoice:"IN8", customerName:"Pratap" ,amount:42 ,tax:20 ,status:"DONE"}
+		
+	])

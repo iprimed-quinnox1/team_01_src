@@ -1,0 +1,24 @@
+var express = require("express");
+//var url = require('url');
+var MongoClient = require('mongodb').MongoClient;
+var url = "mongodb://localhost:27017/";
+
+var app = express();
+
+var data={name:"nishant"};
+app.get("/thirdQueData",function(req,res){
+	res.set({'Content-Type': 'application/json',"Access-Control-Allow-Origin" : "*","Access-Control-Allow-Credentials" : true});//to set the header .
+	MongoClient.connect(url,function(err,database){ //connecting to mongo server
+		if(err) throw err;
+		var dbase = database.db("CART");
+		var res1 = dbase.collection("invoice");
+		res1.find().toArray(function(err,result){
+			if(err) throw err;
+			res.send(result);
+			res.end();
+		});
+		database.close();
+	});
+
+});
+app.listen(3000);

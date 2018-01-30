@@ -1,0 +1,42 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="login_style.css">
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript">
+function check_login()
+{
+ var name=$("#user_name").val();
+ var pass=$("#password").val();
+ if(name=="talkerscode" && pass=="talkerscode")
+ {
+  alert("Successfully Logged In");
+  $("#user_name").val("");
+  $("#password").val("");
+ }
+ else
+ {
+  $("#login_form").removeClass('shake_effect');  
+  setTimeout(function()
+  {
+   $("#login_form").addClass('shake_effect')
+  },1);  
+ }
+}
+</script>
+</head>
+<body>
+<div id="wrapper">
+
+<div id="login_form" class="no_effect">
+ <p id="login_label">LOGIN FORM</p>
+ <p>USERNAME</p>
+ <input type="text" id="user_name">
+ <p>PASSWORD</p>
+ <input type="password" id="password">
+ <p>UserName : talkerscode Password : talkerscode</p>
+ <p><input type="button" value="LOGIN" onclick="check_login();"></p>
+</div>
+
+</div>
+</body>
+</html>
