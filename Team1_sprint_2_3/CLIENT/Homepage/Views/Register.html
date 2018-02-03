@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<title>Authentication Page</title>
+    <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.js"></script>
+<script src="/Homepage/Script/Registercontroller.js"></script>
+
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    </head>
+    <body class="bg">
+
+        <div  ng-app="myApp" ng-controller="myctrl">
+            <div ng-show="start">
+            <div>Customer Name:<span><input type="text" ng-model="Customer_name"></span></div> <br>
+            <div>Password:<span><input type="text" ng-model="Password_pass"></span></div> <br>
+            <div> Default Address:<span><input type="text" ng-model="Address_add"></span></div> <br>
+            <div> Contact Number:<span><input type="text" ng-model="contact_num"></span></div> <br>
+            <div> Email-ID:<span><input type="text" ng-model="email_id"></span></div> <br>
+            <button ng-click="Register_reg()">Register</button> 
+                <button ng-click="Login_start()">Login</button> 
+            </div>
+            <div ng-hide="start">
+                <table>
+                    <tbody>
+                        <tr><td>Enter the username</td><td><input type="text" ng-model="Username_log"></td></tr>
+                         <tr><td>Enter the password</td><td><input type="text" ng-model="password_log"></td></tr>
+                        <tr><button ng-click="Login_start()">Login</button></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+             </body>
+</html>

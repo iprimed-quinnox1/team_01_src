@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<title>WELCOME TO SHOPPING</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.js"></script>
+
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="homepage.css">
+<script src="/Homepage/Script/homepagecontroller.js"></script>
+
+
+
+<body ng-app="myApp" ng-controller="myctrl">
+  <div ng-show="showstart">
+    <center>
+      <input type="text" style="border:1px solid black" ng-model="test" placeholder="Search Products here">
+      <button ng-click="Search_items($index)">Search</button>
+    </center>
+    <div class="bgimg-1 w3-display-container w3-s">
+      <div style="white-space:nowrap;padding-top:20%;">
+        <span class="w3-hide-small" class="w3-center w3-padding-large w3-black w3-xlarge w3-wide w3-animate-opacity">
+          <img src="images/LOGO.png" width="300" height="100" style="margin-left: 40%;margin-bottom: 100%">
+        </span>
+      </div>
+    </div>
+
+    <!-- Container (About Section) -->
+    <div class="slideshow-container">
+
+      <div class="mySlides fade">
+        <div class="numbertext"></div>
+        <img src="clear.png" style="width:1300px;height:300px;">
+        <div class="text"></div>
+      </div>
+
+      <div class="mySlides fade">
+        <div class="numbertext"></div>
+        <img src="jansale.jpeg" style="width:1300px;height:300px;">
+        <div class="text"></div>
+      </div>
+
+      <div class="mySlides fade">
+        <div class="numbertext"></div>
+        <img src="winter.jpg" style="width:1300px;height:300px;">
+        <div class="text"></div>
+      </div>
+
+    </div>
+    <br>
+
+    <div style="text-align:center">
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+    </div>
+
+    <!-- Second Parallax Image with Portfolio Text -->
+    <div class="bgimg-3 w3-display-container w3-opacity-min">
+      <div class="w3-display-middle">
+        <span class="w3-xxlarge w3-text-white w3-wide"></span>
+      </div>
+    </div>
+  </div>
+  <div ng-hide="showstart">
+      <div ng-show="Gotocart">
+    <div class="col-xs-6" style="margin-left: 10%;padding-top: 5%">
+      <h1>
+        <b>{{test}}</b>
+      </h1>
+      <img src="images/Laptop.jpg" width="400px" height="300px">
+    </div>
+    <div class="col-xs-6" style="width: 30%;left:5%;right:5%; padding-top: 5%;" ng-repeat="x in finalList | filter:newtest">
+
+      <table class="table table-striped table-bordered" style="border: 1px solid black;">
+        <thead>
+          <b>Technical Specification</b>
+        </thead>
+        <tbody ng-repeat="y in x.techspec ">
+          <tr>
+            <td>{{y.id}}</td>
+            <td>{{y.val}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <span>
+        <button class="btn btn-primary" ng-click="Add_to_cart()">ADD TO CART</button>
+      </span>
+      <span>
+        <button class="btn btn-success">BUY NOW</button>
+      </span>
+    </div>
+    <div class="col-xs-4" style="margin-left: 10%; padding-top: 0% ">
+      <button ng-click="Viewreview()">View Review</button>
+      <button ng-click="Reviewstart=true;">Add Reviews</button>
+      <button ng-click="Gotocart()">GO TO Cart</button>
+          </div>
+           </div>
+      <div ng-show="Address">
+        <div>
+          <span ng-hide="Adresss_edit">
+            <div>
+              <input ng-model="Editedaddress" placeholder="Enter your new address">
+              <button ng-click="Adress_Edition()">Save</button>
+            </div>
+            <div>
+              <button ng-click="Proceeded_Edition()">Change</button>
+            </div>
+          </span>
+          <div  ng-show="show_address">
+            <table class="table table-striped">
+              <tr>
+                <td>Product name</td>
+                <td>Adresss</td>
+              </tr>
+              <tr>
+                <td>{{productscust}}</td>
+                <td>{{Addresscust}}</td>
+                <td>
+                  <button ng-click="address_edit()">Edit Address</button>
+                </td>
+              </tr>
+            </table>
+
+          </div>
+                     <div  ng-hide="show_address">
+            <table class="table table-striped">
+              <tr>
+                <td>Product name</td>
+                <td>Adresss</td>
+              </tr>
+              <tr>
+                <td>{{productscust}}</td>
+                <td>{{newAdd}}</td>
+              </tr>
+            </table>
+
+          </div>
+
+        </div>
+      </div>
+
+      <div ng-show="Reviewstart">
+        <table>
+          <thead></thead>
+          <tbody>
+            <tr>
+              <td>Name</td>
+              <td>
+                <input type="text" ng-model="Reviewname" required>
+              </td>
+            </tr>
+            <tr></tr>
+            <tr>
+              <td>Email_id</td>
+              <td>
+                <input type="email" ng-model="Reviewemail" required>
+              </td>
+            </tr>
+            <tr></tr>
+            <tr>
+              <td>Comment</td>
+              <td>
+                <textarea rows="4" cols="20" ng-model="Reviewarea" required></textarea ></td>
+                       </tr>   <tr></tr>
+                          <tr>
+                              <td><button ng-click="Reviewfun()" class="btn btn-primary">Send</button></td>
+                       </tr>
+                   </tbody>
+                   </table>
+               </div>
+                <div ng-show="Viewstart"> 
+               <table>
+                   <thead></thead>
+                   <tbody>
+                       <tr>
+                           <td>Name</td>
+                           <td>{{review}}</td>
+                       </tr>
+                       <tr></tr>
+                       <tr>
+                           <td>Email_id</td>
+                           <td>{{review1}}</td>
+                       </tr>   <tr></tr>
+                       <tr>
+                           <td>Comment</td>
+                           <td>{{review2}}</td>
+                       </tr>   
+                          <tr>
+                              <td><button ng-click="location.reload();">Back</button></td>
+                       </tr>
+                   </tbody>
+                   </table>
+               </div>
+    
+      </div>  
+  
+
+
+</body>
+
+</html>

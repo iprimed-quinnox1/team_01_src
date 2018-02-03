@@ -1,0 +1,58 @@
+<html>
+    <head>
+        <title>Cart Information</title>
+            <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </head>
+    <body ng-app="app" ng-controller="ctrl">
+        <div class="col-lg-6" ng-init="Buy=true">
+            <div ng-show="Buy">
+                    <table class="table table-striped">
+                            <tr>
+                                <td>Product name</td>
+                                <td>Price</td>
+                               
+                            </tr>
+                            <tr><td>{{x.products}}</td>
+                                <td>{{x.Price}}</td>
+                                <td><button ng-click="buyNow()">Buy now</button></td>
+                            </tr>
+                    </table>
+            </div>
+       
+        
+        <div ng-hide="Buy">
+            <table>
+                <tr>      
+                <td>{{x.products}}</td>
+                <td>{{x.price}}</td>
+                <td><textarea placeholder="write your address"></textarea><button>Edit</button><button>Proceed</button></td>
+          
+            </table>
+        </div>
+        </div>
+
+
+        <script>
+            var app=angular.module("app",[]);
+            app.controller("ctrl",function($scope,$http){
+                $scope.arr=[];
+                $http.get("http://192.168.10.30:5000/productInfoList").then(function(response){
+                    $scope.finalList=response.data;
+
+                })
+
+                $scope.buyNow=function(){
+                    $scope.Buy=false;
+                }
+
+
+
+            });
+        </script>
+
+    </body>
+</html>
