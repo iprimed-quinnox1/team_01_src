@@ -1,0 +1,27 @@
+var express = require("express");
+var httpBase = require("./service/http-base");
+var mon = require("./db/mongo.js");
+var router = express.Router();
+
+
+
+
+
+
+//----------Updating product list------------------------------    //Add to product folder
+router.get("/updateProduct", function (request, response) {
+    var name = req.body.addresses;
+    //console.log("reaching");
+    httpBase.setHeader(response);
+    updateProduct(name,function (result) {
+        //console.log(res);
+        response.send(result);
+        response.end();
+    });
+
+});
+function updateProduct(callback) {
+
+    mon.update(callback);
+}
+

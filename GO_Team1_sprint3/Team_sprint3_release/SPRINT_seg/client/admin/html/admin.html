@@ -1,0 +1,75 @@
+<html>
+<head>
+	<meta charset="UTF-8">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.js"></script>
+
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<!--script type="text/javascript" src="../../Cdn.js"></script-->
+  <script src="../controller/admincontroller.js"></script>
+<link rel="stylesheet" href="../style/adminstyle.css">
+</head>
+
+<body ng-app="myApp" ng-controller="mycntrl" class="pid">
+    <div ng-show="start">
+        <span>
+            <input class="ps" type="text" ng-model="Product_id" placeholder="Product Name">
+        </span>
+        <button class="btn btn-info" ng-click="Product_itemsfun($index)">Add Product_items</button>
+    </div>
+    <br>
+    <br>
+    <center ng-show="start">
+        <input type="search" style=" font-size: 18px;" ng-model="test" placeholder="Search here">
+    </center>
+    <div class="list-group" >
+        <div class="list-group-item" style="width:800px;margin-left:3in;font-size:20px;color:white" ng-hide="show" ng-repeat="x in finalList |filter:test" >
+            <span>{{x.pid}}
+                <button style="float:right;" class="btn btn-info" ng-click="go($index)">GO</button>
+            </span>
+        </div>
+    </div>
+    <div ng-hide="start" class="pda">
+        <span>
+            <input type="text" style="margin-left:4in;" ng-model="Attribute" placeholder="Enter the attribute name" required
+                autofocus>
+        </span>
+        <span>
+            <input type="text" ng-model="Value" placeholder="Enter the value" required autofocus>
+        </span>
+        <button ng-click="Addto()" class="btn btn-info">Add to the field</button>
+        <br>
+        <br>
+        <div ng-show="Important" ng-repeat="x in finalList | filter:new1">
+            <table class="table table-bordered" style="color:cadetblue;background-color:cornsilk;width:670px;margin-left:3.5in;">
+                <tr ng-repeat="y in x.techspec">
+                    <td>{{y.id}} </td>
+                    <td> {{y.val}}</td>
+                    <td>
+                        <span style="cursor:pointer;float:right;" class="glyphicon glyphicon-trash" ng-click="remove_items($index)"></span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div>
+            <button class="btn btn-success" style="margin-left:6in;margin-bottom:1in;color:black;font-size:20px;" ng-click="Another_item()">Done</button>
+            <button class="btn btn-success" style="margin-bottom:1in;color:black;font-size:20px;" ng-click="back()">Back</button>
+        </div>
+        <div ng-show="show1" ng-repeat="z in arr">
+            <table class="table table-bordered " style="color:black;background-color:cornsilk;width:600px;margin-left:4in;">
+                <tr>
+                    <td>{{z.id}} </td>
+                    <td> {{z.val}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+   
+</body>
+
+</html>

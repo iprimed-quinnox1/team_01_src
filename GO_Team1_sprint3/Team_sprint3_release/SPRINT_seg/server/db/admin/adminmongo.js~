@@ -1,0 +1,75 @@
+var url = "mongodb://localhost:27017";
+var MongoClient = require('mongodb').MongoClient;
+
+//--------------------requiring product update service---------------------
+exports.updateProduct = function updateProduct(callback){
+ MongoClient.connect(url, function (err, dbase) {
+   if (err) throw err;
+    var db = dbase.db("Products_data");
+    var myobj = req.body;
+    console.log(myobj);
+     db.collection("Products_list").update({pid:myobj.pid},{$push:{techspec:myobj.techspec}}), function (err, result) {
+        if (err) throw err;
+        console.log(myobj.nameOfTheList + " Inserted");
+     };
+     callback(result);
+     dbase.close();
+ });        
+ }
+//----------------------------------------------------------------------------
+
+//----------------- requiring insert Product service---------------------------
+
+exports.insertProduct = function insertProduct(name,callback){
+MongoClient.connect(url, function (err, dbase) {
+    if (err) throw err;
+    var db = dbase.db("Products_data");
+    var myobj = name;
+    console.log(myobj);
+    db.collection("Products_list").insertOne(myobj, function (err, result) {
+        if (err) throw err;
+        console.log(myobj.pid + " Inserted1");
+        callback(result)
+    });
+    
+    dbase.close();
+});
+}
+//-----------------------------------------------------------------------------
+
+//--------------------initializing Product service------------------------------------
+ exports.initializeProductlist=function initializeProductlist(callback){
+     MongoClient.connect(url, function (err, database) { //connecting to mongo server
+        if (err) throw err;
+        var dbase = database.db("Products_data");
+        var res1 = dbase.collection("Products_list");
+        res1.find().toArray(function (err, result) {
+            if (err) throw err;
+            res.send(result);
+            console.log("sent");
+            res.end();
+        });
+        callback(result);
+        database.close();
+    });
+}
+//--------------------------------------------------------------------------------------
+
+//-------------------requiring Product item removal service---------------------------------------
+exports.deleteProductitem=function deleteProductitem(callback){
+    MongoClient.connect(url,function(err,database){
+        if(err) throw err;
+        var datab = database.db("Products_data");
+        var myob = request.body;
+        //console.log(myob);
+        datab.collection("Cart").update({pid:myob.pidToRemove},{$pull:{techspec:myob.techSpec}},function(err,result){
+            if(err) throw err;
+            console.log("deleted");
+        });
+        callback(result);
+        database.close();
+    });
+}
+//-------------------------------------------------------------------------------------------
+
+

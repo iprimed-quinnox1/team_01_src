@@ -1,0 +1,26 @@
+var express = require("express");
+var httpBase = require("./service/http-base");
+var mon = require("./db/mongo.js");
+var router = express.Router();
+
+
+
+
+//------------------Initializing Product List-------------------              //Add to product
+router.get("/initializeProductlist", function (request, response) {
+    //console.log("reaching");
+    var name = req.body.addresses;
+    httpBase.setHeader(response);
+   initializeProductlist(function callback(result) {
+        //console.log(res);
+        response.send(result);
+        response.end();module.exports = router;
+    });
+
+});
+function initializeProductlist(callback) {
+
+    mon.update(callback);
+}
+//---------------------------------------------------------------
+

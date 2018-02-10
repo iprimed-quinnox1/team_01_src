@@ -1,0 +1,168 @@
+   var app = angular.module("myApp", []);
+    app.controller("myctrl", function ($scope, $http, $location) {
+      $http.get("http://localhost:5000/initializeListProducts_list").then(function (response) {
+        $scope.finalList =response.data;
+      });
+      $http.get("http://localhost:5000/initializeListCustomerdetails").then(function (response) {
+        $scope.default_Add = response.data;
+      });
+      $http.get("http://localhost:5000/initializeListCart").then(function (response) {
+        $scope.finalListproduct = response.data;
+      });
+      $scope.productscust = [];
+      $scope.showstart = true;
+      $scope.Adressedit = true;
+
+		//SEARCH THE PRODUCT AVAILABLE IN PRODUCT LIST
+      $scope.Search_items = function () {
+
+        for (var i = 0; i < $scope.finalList.length; i++) {
+          if ($scope.finalList[i].pid == $scope.Searched_items) {
+            $scope.selectedSearched_items = $scope.Searched_items;
+            $scope.showstart = false;
+          }
+        }
+
+      }
+	  //ADDING REVIEW
+      $scope.Reviewfun = function () {
+        $scope.Reviewstart = true;
+        $scope.add = { "pid": $scope.Searched_items, "review": { "Reviewname": $scope.Reviewname, "Reviewemail": $scope.Reviewemail, "Reviewarea": $scope.Reviewarea } };
+        $http.post("http://localhost:5000/addingreviews", $scope.add).then(function (response) {
+          console.log("success");
+        });
+        $scope.Reviewstart = false;
+      }
+	  //FOR VIEWING REVIEW
+      $scope.Viewreview = function () {
+        $scope.Viewstart = true;
+        $http.get("http://localhost:5000/initializeListProducts_list").then(function (response) {
+           $scope.finalList = response.data;
+        });
+		  for(var i=0;i<$scope.finalList.length;i++){
+			  if($scope.finalList[i].pid==$scope.Searched_items)
+				  {
+					  $scope.Totalreview=$scope.finalList[i].review;
+				  }
+		  }
+		    
+      }
+	  //FOR ADDING PRODUCTS IN CART
+      $scope.Add_to_cart = function () {
+        alert("adding Product");
+        for (var i = 0; i<$scope.finalListproduct.length; i++) {
+          if ($scope.finalListproduct[i].Customer_name == $location.search().key && $scope.finalListproduct[i].products.Prod == $scope.Searched_items) {
+            alert("Product already exists ");
+            return;
+          }
+        }
+        $scope.add = { "Customer_name": $location.search().key, "products": { "Prod": $scope.Searched_items, "Add": {} } };
+        console.log($scope.add);
+        $http.post("http://localhost:5000/cartinsert", $scope.add).then(function (response) {
+          alert("Product added");
+          console.log("success");
+        });
+        $http.get("http://localhost:5000/initializeListCart").then(function (response) {
+          $scope.finalListproduct = response.data;
+        });
+      }
+	  //LIST OF PRODUCT AVAILABLE IN CART
+      $scope.Gotocart = function () {
+        $http.get("http://localhost:5000/initializeListCart").then(function (response) {
+          $scope.finalListproduct = response.data;
+        });
+        $http.get("http://localhost:5000/initializeListCustomerdetails").then(function (response) {
+          $scope.default_Add = response.data;
+        });
+        $scope.Gotocart = false;
+        $scope.Address = true;
+
+        $scope.show_address = true;
+        for (var i = 0; i < $scope.finalListproduct.length; i++) {
+          if ($scope.finalListproduct[i].Customer_name == $location.search().key) {           
+            $scope.productscust.push($scope.finalListproduct[i]);
+          }
+        } 
+        for (var i = 0; i < $scope.default_Add.length; i++) {
+          if ($scope.default_Add[i].Customer_name == $location.search().key) {
+            $scope.Addresscust = $scope.default_Add[i].Address;
+              //$scope.indexpositionofcucstomer=i;
+
+          }
+        }
+
+      }
+	  //SAVING THE NEW ADDRESS
+      $scope.Save_Address = function (x) {
+        alert($scope.Editedaddress); 
+		  $http.get("http://localhost:5000/initializeListCart").then(function (response) {
+          $scope.finalListproduct = response.data;
+        }); 
+          $scope.add = { "Customer_name": $location.search().key, "products": { "Prod": $scope.productscust[x].products.Prod, "Add":$scope.Editedaddress } };
+          console.log($scope.add);
+
+          $http.post("http://localhost:5000/UpdateAddress", $scope.add).then(function (response) {
+            console.log("success");
+          });
+          $http.get("http://localhost:5000/initializeListCart").then(function (response) {
+          $scope.finalListeditedaddress = response.data;
+        });
+                
+      }
+	  //FOR CHANGING THE DEFAULT ADDRESS
+      $scope.Proceed_changes=function (x) {
+        alert("Changed");
+        $http.get("http://localhost:5000/initializeListCart").then(function (response) {
+          $scope.finalListeditedaddress = response.data;
+          $scope.Editedaddress = " ";
+          $scope.Adressedit = true;
+             $scope.newAddress= $scope.finalListeditedaddress[$scope.indexposition].products.Add;
+			console.log( $scope.newAddress);
+            $scope.DefaultAddress = false;   
+        });     
+      }
+      $scope.address_edit = function (x) {
+        $scope.Adressedit = false;
+        $scope.indexposition=x;
+      }
+      //for checkout//
+      $scope.CHECKOUT=function()
+      {
+            var  inputforchangeaddress=prompt("Do you want to change your default address","yes");
+            if(inputforchangeaddress=="yes")
+              {               
+                    $scope.add={ "Customer_name": $location.search().key,"Address":$scope.newAddress};
+                   $http.post("http://localhost:5000/updateCustomerAddress", $scope.add).then(function (response) {
+                        console.log("success");
+                    });
+				  
+              }
+		//Inserting product in orderHistory
+$scope.currentstatus="Item in warehouse";
+	 $scope.addorderhistory={ "Customer_name": $location.search().key, "products": { "Prod": $scope.productscust[$scope.indexposition].products},"status":$scope.currentstatus};
+                   $http.post("http://localhost:5000/initializeListOrderhistory", $scope.addorderhistory).then(function (response) {
+                        console.log("success");
+                    });
+
+		  //DELETE PRODUCT ADDED IN CART FROM THE DATABASE
+		    $scope.deletefromdatabase={ "Customer_name":$location.search().key,"products":$scope.finalListeditedaddress[$scope.indexposition].products.Prod};
+				  $http.post("http://localhost:5000/deleteItemFromCartList", $scope.deletefromdatabase).then(function (response) {
+                        console.log("success");
+                    });
+		  alert("ITEM PLACED");
+      }
+$scope.orderhistory=function()
+		{
+			 $http.get("http://localhost:5000/initializeListOrderhistory").then(function (response) {
+          $scope.finalListorderhistory = response.data;
+        });
+		$scope.combiningallorderhistory=[];
+		if( $scope.finalListorderhistory.Customer_name==$location.search().key)
+			{
+					$scope.statusoforderhistory= $scope.finalListorderhistory.products.Prod;
+					$scope.productsinorderhistory=$scope.finalListorderhistory.products.Add;	
+					$scope.addressinorderhistory=$scope.finalListorderhistory.status
+					$scope.combiningallorderhistory.push($scope.statusoforderhistory,$scope.productsinorderhistory,	 $scope.addressinorderhistory);
+			}
+		}
+    });

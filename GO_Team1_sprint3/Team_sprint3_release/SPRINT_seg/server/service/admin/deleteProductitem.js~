@@ -1,0 +1,25 @@
+var express = require("express");
+var httpBase = require("./service/http-base");
+var mon = require("./db/mongo.js");
+var router = express.Router();
+
+
+
+
+//------------------Deleting product item------------------------              //Add to Product
+router.post("/deleteProductitem", function (request, response) {
+    //console.log("reaching");
+    var name = req.body.addresses;
+    httpBase.setHeader(response);
+   deleteProductitem(function callback(result) {
+        //console.log(res);
+        response.send(result);
+        response.end();
+    });
+
+});
+function deleteProductitem(callback) {
+
+    mon.update(callback);
+}
+//---------------------------------------------------------------

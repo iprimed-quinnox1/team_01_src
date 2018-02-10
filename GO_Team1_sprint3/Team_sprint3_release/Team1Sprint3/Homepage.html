@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+<title>Product Master</title>
+	<meta charset="UTF-8">
+			<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.js"></script>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script type="text/javascript" src="./Controller/Homepagecontroller.js"></script>
+<link rel="stylesheet" href="./Css/Homepagestyle.css">
+<body ng-app="myApp" ng-controller="myctrl" style="background-image: url("Images/Onlinecart.jpg")">
+  <div ng-show="showstart">
+    <center>
+      <input type="text" ng-model="Searched_items" placeholder="Search Products here">
+      <button ng-click="Search_items()">Search</button>
+    </center>
+	  <div >
+		   <button ng-click="Gotocart()" class="btn btn primary">GO TO Cart</button>
+			<button ng-click="orderhistory()" class="btn btn primary">Order history</button>
+	  </div>
+    <div >
+		<centre> <img src="./Images/LOGO.png" width="300" height="100"></centre>
+    </div>
+  </div>
+  <div ng-hide="showstart">
+    <div ng-show="Gotocartshow">
+      <div class="col-xs-6" style="margin-left: 10%;padding-top: 5%">
+        <h1>
+          <b>{{Searched_items}}</b>
+        </h1>
+        <img src="images/Laptop.jpg" width="400px" height="300px">
+      </div>
+      <div class="col-xs-6" style="width: 30%;left:5%;right:5%; padding-top: 5%;" ng-repeat="x in finalList | filter:selectedSearched_items">
+
+        <table class="table table-striped table-bordered" style="border: 1px solid black;">
+          <thead>
+            <b>Technical Specification</b>
+          </thead>
+          <tbody ng-repeat="y in x.techspec ">
+            <tr>
+              <td>{{y.id}}</td>
+              <td>{{y.val}}</td>
+            </tr>
+          </tbody>
+        </table>
+        <span>
+          <button class="btn btn-primary" ng-click="Add_to_cart()">ADD TO CART</button>
+        </span>
+        <span>
+          <button class="btn btn-success">BUY NOW</button>
+        </span>
+      </div>
+      <div class="col-xs-4" style="margin-left: 10%; padding-top: 0% ">
+        <button ng-click="Viewreview()">View Review</button>
+        <button ng-click="Reviewstart=true;">Add Reviews</button>
+       <button ng-click="Gotocart()">GO TO Cart</button>
+          <button onclick="location.reload()";>Back</button>       
+      </div>
+    </div>
+  </div>
+  <div ng-show="Address">
+    <div>
+      <span ng-hide="Adressedit">
+           <div class="modal fade"  id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Enter the new address</h4>
+        </div>
+        <div class="modal-body">
+         <input ng-model="Editedaddress" placeholder="Enter your new address" required>
+         <button  class="btn btn-default"  ng-click="Save_Address(indexposition)">Save</button>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="Proceed_changes(indexposition)">Ok</button>
+        </div>
+      </div>
+    </div>
+</div>
+      </span>
+     <div ng-show="show_address" style="max-height: 100px">
+        <table class="table table-striped" ng-init="DefaultAddress=true;"  >
+          <thead>
+            <th>Product name</th>
+            <th>Default Address</th>
+          </thead>
+            <tbody >
+				<!--FOR SHOWING THE ADDRESS-->
+          <tr ng-show="DefaultAddress"  ng-repeat="x in productscust track by $index">
+            <td>{{x.products.Prod}}</td>
+            <!--<td >{{selectedStatus}}</td>-->
+			    <td>{{selectedStatus}}
+                    <select ng-model="selectedStatus" ng-options="item for item in Addresscust">
+                        </select>
+                </td>
+            <td >
+              <button ng-click="address_edit($index)" data-toggle="modal" data-target="#myModal">Edit Address</button>
+            </td>
+               </tr>         
+              <tr ng-hide="DefaultAddress">
+             <td >{{finalListeditedaddress[indexposition].products.Prod}}</td>
+            <td >{{newAddress}}</td>
+            <td >
+        <button class="btn btn-info" ng-click="CHECKOUT()">CHECKOUT</button>
+      </td>
+                   <td><button  class="btn btn-info"  onclick="location.reload()";>Back</button></td>
+          </tr>     
+                 </tbody>
+        </table>
+  
+      <span>
+        <button class="btn btn-info" ng-click="history.back();">BUYNOW</button>
+      </span>
+		   </div >
+    </div>
+  </div>
+  <div ng-show="Reviewstart">
+    <table>
+      <thead></thead>
+      <tbody>
+        <tr>
+          <td>Name</td>
+          <td>
+            <input type="text" ng-model="Reviewname" required>
+          </td>
+        </tr>
+        <tr></tr>
+        <tr>
+          <td>Email_id</td>productscust
+          <td>
+            <input type="email" ng-model="Reviewemail" required>
+          </td>
+        </tr>
+        <tr></tr>
+        <tr>
+          <td>Comment</td>
+          <td>
+            <textarea rows="4" cols="20" ng-model="Reviewarea" required></textarea ></td>
+                       </tr>
+                          <tr> 
+                              <td><button ng-click="Reviewfun()" class="btn btn-primary">Send</button></td>
+                       </tr>
+                   </tbody>
+                   </table>
+               </div>
+                <div ng-show="Viewstart" ng-repeat="x in Totalreview"> 
+               <table>
+                   <tbody>
+                       <tr>
+                           <td>Name</td>                        
+                           <td>{{x.Reviewname}}</td>
+                       </tr>                     
+                       <tr>
+                           <td>Email_id</td>
+                           <td>{{x.Reviewemail}}</td>
+                       </tr>   
+                       <tr>
+                           <td>DefaultAddressComment</td>
+                           <td>{{x.Reviewarea}}</td>
+                       </tr>   
+                          <tr>
+                              <td><button  onclick="location.reload()";>Back</button></td>
+                        </tr>
+                   </tbody>
+                   </table>
+               </div>
+    	<!-- For the order history-->
+	<div>
+                      <table ng-show="changeproduct" class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                               <th>Product name</th>             
+                               <th>Delivery address</th>
+                               <th>Status</th>
+                                <th>&nbsp;</th>
+                                <th>&nbsp;</th>   
+                            </tr>
+                                    </thead>
+                                    <tbody >
+                                        <tr ng-repeat="x in finalListorderhistory">
+                                            <td>{{x.products.Prod}}</td>                       
+                                            <td>{{x.products.Add}}</td>
+                                            <td>{{x.status}}</td>
+                                            <td><button type="button"  class="btn btn-info btn-md"  
+														ng-click="changedeliveryadd(x.products.Prod,x.status)" >Change delivery address</button> </td>
+                                             <td><button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#myModal1" ng-click="closeproduct(x.products,x.status)">Cancel Your Product</button></td>
+                                        </tr>
+                                    </tbody>                                  
+	</table>
+	</div>
+              <!-- For changing the order history-->          
+              <div class="modal fade" id="myModal1" role="dialog">
+                  <div class="modal-dialog">
+                  
+                   <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Change of Product</h4>
+                        </div>
+                        <div class="modal-body">
+                            <h5>Product as been cancelled, Do you want to continue Shopping? </h5>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="location.reload();">Ok</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal" >Close</button>
+                        </div>
+                      </div>
+                    
+                  </div>
+          </div>
+	<!--for changing the address from the order history when it is in logistics-->
+	  <div class="modal fade" id="myModaladd" role="dialog">
+                  <div class="modal-dialog">
+                  
+                   <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Please Enter your new Address</h4>
+                        </div>
+                        <div class="modal-body">
+                            <input type="text" ng-model="updateorderadd" placeholder="Enter your address">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="location.reload();">Ok</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal" >Close</button>
+                        </div>
+                      </div>
+                    
+                  </div>
+          </div>
+      <!--For changing the addresss from order history-->    
+      <div ng-show="orderhistoryshow">
+          <input type="text" ng-model="updateorderadd" placeholder="Enter your address">
+          <button ng-click="saveaddinorderhistory()">Save</button>
+        </div>
+</body>
+</html>

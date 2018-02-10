@@ -1,0 +1,206 @@
+
+var express = require("express");
+var httpBase = require('/http-base');
+var mon = require("./db/mongo.js");
+var router = express.Router();
+
+
+//----------Updating product list------------------------------
+router.get("/updateProduct", function (request, response) {
+    var name = req.body.addresses;
+    //console.log("reaching");
+    httpBase.setHeader(response);
+    updateProduct(name,function (result) {
+        //console.log(res);
+        response.send(result);
+        response.end();
+    });
+
+});
+function updateProduct(callback) {
+
+    mon.update(callback);
+}
+
+//-----------------------------------------------------------
+
+//------------inserting Product--------------------
+router.post("/insertProduct", function (request, response) {
+    //console.log("reaching");
+    var name = request.body;
+    //httpBase.setHeader(response);
+   insertProduct(name,function (result) {
+        //console.log(res);
+        response.send(result);
+        response.end();
+    });
+
+});
+function insertProduct(name,callback) {
+
+    mon.update(name,callback);
+}
+//------------------------------------------------------------
+
+//----------------Adding to cart-----------
+router.post("/addtoCart", function (request, response) {
+    //console.log("reaching");
+    var name = req.body.addresses;
+    httpBase.setHeader(response);
+   addtoCart(function callback(result) {
+        //console.log(res);
+        response.send(result);
+        response.end();
+    });
+
+});
+function addtoCart(callback) {
+   
+    mon.update(callback);
+}
+//--------------------------------------------------------------
+
+//------------------inserting customer----------------------- 
+router.post("/insertCustomer", function (request, response) {
+    //console.log("reaching");
+    var name = req.body.addresses;
+    httpBase.setHeader(response);
+   insertCustomer(function callback(result) {
+        //console.log(res);
+        response.send(result);
+        response.end();
+    });
+
+});
+function insertCustomer(callback) {
+
+    mon.update(callback);
+}
+//-------------------------------------------------------------------
+//-------------------updating Customer Address---------------
+router.post("/updateCustomerAddress", function (request, response) {
+    //console.log("reaching");
+    var name = req.body.addresses;
+    httpBase.setHeader(response);
+   updateCustomerAddress(function callback(result) {
+        //console.log(res);
+        response.send(result);
+        response.end();
+    });
+
+});
+function updateCustomerAddress(callback) {
+
+    mon.update(callback);
+}
+//---------------------------------------------------------------
+
+
+//--------------------Updating Cart Address------------------
+ router.post("/updateCartCustomerAddress", function (request, response) {
+    //console.log("reaching");
+    var name = req.body.addresses;
+    httpBase.setHeader(response);
+   updateCartCustomerAddress(function callback(result) {
+        //console.log(res);
+        response.send(result);
+        response.end();
+    });
+
+});
+function updateCartCustomerAddress(callback) {
+
+    mon.update(callback);
+}
+//---------------------------------------------------------------
+
+//------------------Initializing Product List-------------------
+router.get("/initializeProductlist", function (request, response) {
+    //console.log("reaching");
+    var name = req.body.addresses;
+    httpBase.setHeader(response);
+   initializeProductlist(function callback(result) {
+        //console.log(res);
+        response.send(result);
+        response.end();module.exports = router;
+    });
+
+});
+function initializeProductlist(callback) {
+
+    mon.update(callback);
+}
+//---------------------------------------------------------------
+
+//----------------initializing Customer List---------------------
+router.get("/initializeCustomerlist", function (request, response) {
+    //console.log("reaching");
+    var name = req.body.addresses;
+    httpBase.setHeader(response);
+   initializeCustomerlist(function callback(result) {
+        //console.log(res);
+        response.send(result);
+        response.end();
+    });
+
+});
+function initializeCustomerlist(callback) {
+
+    mon.update(callback);
+}
+//---------------------------------------------------------------
+
+//-------------------initializing Cart list----------------------
+router.get("/initializeCartlist", function (request, response) {
+    //console.log("reaching");
+    var name = req.body.addresses;
+    httpBase.setHeader(response);
+   initializeCartlist(function callback(result) {
+        //console.log(res);
+        response.send(result);
+        response.end();
+    });
+
+});
+function initializeCartlist(callback) {
+
+    mon.update(callback);
+}
+//---------------------------------------------------------------
+
+//------------------Deleting product item------------------------
+router.post("/deleteCartitem", function (request, response) {
+    //console.log("reaching");
+    var name = req.body.addresses;
+    httpBase.setHeader(response);
+   deleteCartitem(function callback(result) {
+        //console.log(res);
+        response.send(result);
+        response.end();
+    });
+
+});
+function deleteCartitem(callback) {
+
+    mon.update(callback);
+}
+//---------------------------------------------------------------
+
+//------------------Deleting Cart item---------------------------
+ router.post("/deleteCartitem", function (request, response) {
+     console.log("reaching");
+     var name = req.body.addresses;
+     httpBase.setHeader(response);
+    deleteCartitem(function callback(result) {
+    console.log(res);
+         response.send(result);
+        response.end();
+    });
+
+});
+function deleteCartitem(callback) {
+
+    mon.update(callback);
+}
+
+module.exports = router;

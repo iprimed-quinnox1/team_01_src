@@ -1,0 +1,28 @@
+ 
+        .pid {
+            background-image: url("../images/cart.jpg");
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: 100%;
+        }
+
+        .ps {
+            margin-left: 5in;
+            margin-top: 1in;
+            font-size: 18px;
+
+        }
+
+        .list-group {
+            margin-top: 1in;
+        }
+
+        .list-group-item {
+            background-color: darkgrey;
+            color: black;
+        }
+
+        .pda {
+            font-size: 18px;
+        }
+    
