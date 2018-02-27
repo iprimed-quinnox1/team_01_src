@@ -1,0 +1,32 @@
+ 
+        .pid {
+            background-image: url("../Images/cart.jpg");
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: 100%;
+        }
+
+        .ps {
+            font-family: 'Times New Roman', Times, serif;
+            margin-left: 5in;
+            margin-top: 1in;
+            font-size: 18px;
+           
+        }
+
+        .list-group {
+            margin-top: 1in;
+        }
+
+        .list-group-item {
+            background-color:gray;
+            color:orange;
+        }
+
+        .pda {
+            font-size: 18px;
+        }
+        .logo{
+            background-image:url("../Images/LOG.png");
+            margin-left: 0%;
+        }

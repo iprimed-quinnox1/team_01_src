@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+<title>Product Master</title>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.js"></script>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script type="text/javascript" src="../Controller/Homepagecontroller.js"></script>
+<link rel="stylesheet" href="../Css/Homepagestyle.css">
+<link rel="stylesheet" type="text/css" href="../Css/Topnavstyle.css">
+
+<body ng-app="myApp" ng-controller="myctrl">
+  <div ng-show="showstart">
+    <div class="top"></div>
+    <div class="topnav">
+      <img src="../Images/LOG.png">
+      <ul class="nav navbar-nav" style="margin-top:0.3in;float:right;font-size:25px;font-family:Times New Roman;">
+        <li>
+          <button class="glyphicon glyphicon-home" ng-click="myAddress()">MyAddress</button>
+        </li>
+        <li>
+          <button class="glyphicon glyphicon-ok" ng-click="orderhistory()">Orderhistory</button>
+        </li>
+        <li>
+          <button class="glyphicon glyphicon-shopping-cart" ng-click="Gotocart()">MyCart</button>
+        </li>
+
+      </ul>
+    </div>
+
+    <div class="bottom"></div>
+    <div ng-show="imageshow" ng-init="imageshow=true;">
+      <form class="navbar-form">
+        <div class="form-group">
+          <input type="text" class="form-control" style="margin-left:5in;font-size:30px" ng-model="Searched_items" placeholder="Search the product"
+            name="search Product here">
+        </div>
+        <button type="search" style="font-family:'Times New Roman', Times, serif" ng-click="Click_items(Searched_items)" class="btn btn-info">Search</button>
+      </form>
+      <div ng-repeat="x in finalList">
+        <span id="prodid" style="margin-top:0.5in" class="col-xs-3">
+          <img style="border:2px solid;margin-right:0.1in;width:300px;height:250px;" ng-model="Clicked_items" ng-click="Click_items(x.pid)"
+            class="col-xs-4" src="{{'../Images/'+x.img}}">
+          <a href="#" style="margin-left:0.9in;" ng-model="Clicked_items" ng-click="Click_items(x.pid)">{{x.pid}}</a>
+        </span>
+      </div>
+    </div>
+  </div>
+  <div ng-hide="showstart">
+    <img style="margin-left:10in;" src="../Images/LOG.png">
+    <div>
+      <div ng-show="Gotocartshow">
+        <div class="col-xs-6" style="margin-left: 10%;padding-top: 0%" ng-show="Gotocartshow">
+          <h2 style="margin-left:0.1in;font-family:'Times New Roman', Times, serif">
+            <b>{{selectedSearched_items}}</b>
+          </h2>
+        </div>
+        <div ng-repeat="x in finalList | filter:selectedSearched_items">
+          <div class="col-xs-6" style="margin-left: 10%;">
+            <img style="margin-right: 8in;width:300px;height:300px;padding:2%" class="rounded" src="{{'../Images/'+ x.img}}">
+            <br>
+            <br>
+            <button class="btn btn-primary btn-lg" ng-click="Addtocart()">ADD TO CART</button>
+            <button class="btn btn-danger btn-lg" ng-click="Gotocart()">GO TO CART</button>
+            <br>
+            <br>
+          </div>
+          <table class="table table-striped" style="margin-left: 8%;width: 400px;padding-top:10%;">
+            <thead>
+              <tr>
+                <th colspan="2">
+                  <h4 style="margin-left:0.9in">
+                    <b>PRODUCT DETAILS</b>
+                  </h4>
+                </th>
+              </tr>
+            </thead>
+            <tbody ng-repeat="y in x.techspec ">
+              <tr>
+                <td>{{y.id}}</td>
+                <td>{{y.val}}</td>
+              </tr>
+            </tbody>
+            <br>
+          </table>
+        </div>
+        <br>
+        <div style="margin-top:0.4in;">
+          <button class="btn btn-info btn-lg" ng-click="Reviewstart=true;">Add Reviews</button>
+          <button class="btn btn-success btn-lg" ng-click="Viewreview()">View Review</button>
+          <button class="btn btn-warning btn-lg" onclick="location.reload()">Back</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div ng-show="Address">
+    <div>
+      <span ng-hide="Adressedit">
+        <div class="modal fade" id="myModal" role="dialog">
+          <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Enter the new address</h4>
+              </div>
+              <div class="modal-body">
+                <textarea rows="3" cols="50" ng-model="Editedaddress" placeholder="Enter your new address" required></textarea>
+                <button class="btn btn-default" ng-click="Save_Address(indexposition)">Save</button>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="Proceed_changes(indexposition)">Ok</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </span>
+      <div ng-show="show_address" style="max-height: 100px">
+        <div ng-init="DefaultAddress=true;">
+          <table ng-show="DefaultAddress" class="table table-striped" style="font-size:20px;">
+            <thead>
+              <th>Product Image</th>
+              <th>Product Name</th>
+              <th>Delivery Address</th>
+              <th>&nbsp;</th>
+              <th>&nbsp;</th>
+            </thead>
+            <tbody>
+              <!--FOR SHOWING THE ADDRESS-->
+              <tr ng-repeat="x in updatedfinalListproduct track by $index">
+                <td>
+                  <img src="{{'../Images/'+ x.products.img}}" width="200px" height="200px">
+                </td>
+                <td>{{x.products.Prod}}</td>
+                <td>{{selectedStatus}}
+                  <select ng-model="selectedStatus" ng-options="item for item in addressforonecustomer[0].Address">
+                  </select>
+                </td>
+
+                <td>
+                  <button ng-click="address_edit(x.products.Prod,$index,x.products.img)" class="btn btn-lg btn-danger" data-toggle="modal"
+                    data-target="#myModal">Edit Address</button>
+                </td>
+                <td>
+                  <button class="btn btn-info btn-lg" ng-click="Buynow(x.products.img,x.products.Prod,selectedStatus)">BUYNOW</button>
+                </td>
+                <td>
+                  <span class="glyphicon glyphicon-trash btn-lg" style="font-size:35px" ng-click="removefromaddtocart(x.products.Prod,$index)"></span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <table ng-hide="DefaultAddress" class="table table-striped" style="font-size:20px;">
+            <thead>
+              <th>Product Image</th>
+              <th>Product Name</th>
+              <th>Delivery Address</th>
+              <th>Gift</th>
+              <th>&nbsp;</th>
+              <th>&nbsp;</th>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <img src="{{'../Images/'+ imageshow}}" width="200px" height="200px">
+                </td>
+                <td>{{finalListeditedaddress[indexposition].products.Prod}}</td>
+                <td>{{newAddress}}</td>
+                <td>
+                  <button class="glyphicon glyphicon-gift btn-lg" ng-click="giftsend()"></button>
+                  <br>
+
+                </td>
+                <td>
+                  <button class="btn btn-info btn-lg" ng-click="CHECKOUT()">CHECKOUT</button>
+                </td>
+                <td>
+                  <button class="btn btn-success btn-lg" onclick="location.reload();">Back</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div ng-show="Reviewstart">
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th>
+            <h4>
+              <b>ADD REVIEW</b>
+            </h4>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="form-group">Comment:</td>
+          <td>
+            <textarea rows="4" cols="20" class="form-control" ng-model="Reviewarea" required></textarea ></td>
+                       </tr>
+                          <tr> 
+                              <td><button ng-click="Reviewfun()" class="btn btn-primary">Send</button></td>
+                       </tr>
+                   </tbody>
+                   </table>
+               </div>
+                <div ng-hide="Reviewstart" ng-repeat="x in Totalreview"> 
+               <table>
+                 <thead>
+                   <tr><th></th>
+                     <th><h4><b>Your Review</b></h4></th>
+                   </tr>
+                 </thead>
+                   <tbody>
+                       <tr>
+                           <td class="form-group">Name</td>                        
+                           <td class="form-control">{{x.Reviewname}}</td>
+                       </tr>                        
+                       <tr>
+                           <td class="form-group">Comment</td>
+                           <td class="form-control">{{x.Reviewarea}}</td>
+                       </tr>   
+                          <tr>
+                              <td><button  onclick="location.reload()";>Back</button></td>
+                        </tr>
+                   </tbody>
+                   </table>
+               </div>
+    	<!-- For the order history-->
+      <div>
+        <table ng-show="changeproduct" style="font-size:20px;margin-top:0.5in;" class="table table-striped">
+          <thead>
+              <tr>
+                  <th>Product Image</th> 
+                  <th>Product Name</th>            
+                  <th>Delivery address</th>
+                  <th>Status</th>
+            <th>Gift</th>
+                  <th>&nbsp;</th>
+                  <th>&nbsp;</th>  
+              </tr>
+            </thead>
+            <tbody >
+                <tr ng-repeat="x in finalListorderhistory">
+                  <td><img src="{{'../Images/'+ x.products.img}}" width="200px" height="200px"> </td>
+                  <td>{{x.products.Prod}}</td>                       
+                  <td>{{x.products.Add}}</td>
+                  <td>{{x.status}}</td>
+              <td>{{x.Gift}}</td>
+                  <td><button type="button" class="btn btn-info btn-md"  ng-click="changedeliveryadd(x.products.Prod,x.status,x._id)" ng-disabled="x.status==='Item has been cancelled'||x.status==='Out for delivery'||x.status==='Delivered'||x.status==='Shipped'" data-toggle="modal"  data-target="#Modal">Change delivery address</button> </td>
+                    <td><button type="button" class="btn btn-info btn-md" ng-click="closeproduct(x.products,x.status)" ng-disabled="x.status==='Item has been cancelled'||x.status==='Out for delivery'||x.status==='Delivered'||x.status==='Packed'||x.status==='Shipped'">Cancel Your Product</button></td>
+                </tr>
+            </tbody>                                  
+        </table>
+        </div>
+         <!--For changing the addresss from order history-->    
+         <div ng-show="orderhistoryshow" >
+          <div class="modal fade" id="Modal" role="dialog" >
+              <div class="modal-dialog">
+                 <!-- Modal content-->
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Enter the new address</h4>
+                  </div>
+                  <div class="modal-body">
+                      <textarea rows="3" cols="50" ng-model="updateorderadd" placeholder="Enter your address"></textarea>
+  </div>
+  <div class="modal-footer" onclick="$('.modal').modal('hide')">
+    <button class="btn btn-primary" ng-click="saveaddinorderhistory()">One time Address</button>
+    <button class="btn btn-success" ng-click="saveaddinlistofaddress()">Add to the List of addresses</button>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  <!--For showing the address of the customer-->
+  <div ng-show="myaddress">
+    <table class="table table-striped" ng-repeat="x in addressforparticularcustomer">
+      <th>List of addresses</th>
+      <th>&nbsp;</th>
+      <tbody ng-repeat="y in x.Address track by $index">
+        <tr>
+          <td>{{y}}</td>
+          <td>
+            <button class="btn btn-info btn-md" ng-click="myaddresslist(y,$index)" ng-hide="{{y==x.Default_address}}">Make this as a Default address</button>
+          </td>
+          <td>
+            <button ng-show="{{y==x.Default_address}}" style="color:green"> Default address set</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,38 @@
+.formBody {
+      margin-left: 3.3in;
+    margin-right: 4in;
+    margin-top: 1in;
+    background-color: rgb(57, 171, 175);
+    border: 5px solid rgb(199, 112, 131);
+    border-radius: 5px;
+    padding: 50px;
+    cursor: pointer;
+    color:white;
+    
+   
+}
+
+.btn{
+     color:blanchedalmond;
+      margin-top: 5px;
+       margin: 4px 2px;
+        padding: 10px 22px;
+      font-size: 16px;
+    border-radius: 8px;
+    text-align: center;
+    background-color:maroon;
+    border-color: #9E9C9C;
+    
+    
+}
+
+.btn:hover {
+   
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+ 
+}
+
+.background
+{background-image: url("../Priyu/background.jpg");
+ background-attachment: fixed;
+ background-size:100%; }
